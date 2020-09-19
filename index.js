@@ -26,10 +26,28 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <input type="text" name="input-new-name" id="${item.id}" placeholder="new name here">
+        <button class="change-name-button">
+          <span>change name</span>
+        </button>
       </div>
     </li>`;
 };
 
+function handleChangeName(){
+  $('.js-shopping-list').on('click', '.change-name-button', function(event){
+    console.log('Change name button pressed');
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log(id);
+    const newName = $('input[name="input-new-name"]').val()
+    console.log(newName);
+    findById(id).name = newName;
+    render();
+  })
+}
+function findById(id){
+  return store.items.find(x => x.id === id);
+}
 const generateShoppingItemsString = function (shoppingList) {
   const items = shoppingList.map((item) => generateItemElement(item));
   return items.join('');
@@ -160,6 +178,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleChangeName();
 };
 
 // when the page loads, call `handleShoppingList`
