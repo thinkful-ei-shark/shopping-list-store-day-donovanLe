@@ -26,20 +26,20 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <form class="new-name-field" >
         <input type="text" name="input-new-name" id="${item.id}" placeholder="new name here">
-        <button class="change-name-button">
-          <span>change name</span>
-        </button>
+        <input type="submit" value="Submit"/>
+        </form>
       </div>
     </li>`;
 };
 
 function handleChangeName(){
-  $('.js-shopping-list').on('click', '.change-name-button', function(event){
+  $('.js-shopping-list').on('submit', '.new-name-field', function(event){
+    event.preventDefault();
     console.log('Change name button pressed');
     const id = getItemIdFromElement(event.currentTarget);
-    console.log(id);
-    const newName = $('input[name="input-new-name"]').val()
+    const newName = $(event.currentTarget).find('input[name="input-new-name"]').val()
     console.log(newName);
     findById(id).name = newName;
     render();
